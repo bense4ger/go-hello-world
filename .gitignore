@@ -12,3 +12,8 @@
 
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
+
+.vscode/
+go-hello-world
+go-hello-world.exe
+go-hello-world.exe~
