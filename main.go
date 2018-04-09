@@ -12,6 +12,7 @@ import (
 var pathFlg string
 
 func main() {
+
 	if pathFlg == "" {
 		log.Fatal("No path supplied")
 	}
