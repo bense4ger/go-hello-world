@@ -3,8 +3,12 @@ package model
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"path"
+	"sync"
 	"time"
+
+	"github.com/bense4ger/go-hello-world/helper"
 )
 
 // File represents a filename
@@ -18,14 +22,20 @@ func (f *File) String() string {
 }
 
 // ProcessContent takes the reciever's content and appends the date
-func (f *File) ProcessContent() (string, error) {
+func (f *File) ProcessContent(id int, wg *sync.WaitGroup, out chan string) {
+	d := helper.RandomDuration()
+	time.Sleep(d)
+
 	bytes, err := ioutil.ReadFile(f.String())
 	if err != nil {
-		return "", fmt.Errorf("Error processing content for %s: %s", f, err.Error())
+		log.Println(fmt.Errorf("Error processing content for %s: %s", f, err.Error()))
+		wg.Done()
+		return
 	}
 
 	t := time.Now()
 	formattedT := t.Format("2006-02-01")
 
-	return fmt.Sprintf("%s - [%s]", bytes, formattedT), nil
+	out <- fmt.Sprintf("%s - [%d] [%s] - Delayed: %s", bytes, id, formattedT, d)
+	wg.Done()
 }

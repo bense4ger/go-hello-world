@@ -3,31 +3,35 @@ package processor
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
+	"sync"
 
 	"github.com/bense4ger/go-hello-world/model"
 )
 
-type counter int
-
-func (c counter) Log() {
-	fmt.Printf("count: %d\n", c)
-}
-
 // Do processes each of the files in the passed directory
-func Do(dir string) (int, error) {
-	var count counter
+func Do(dir string) error {
 
 	files, err := getFileList(dir)
 	if err != nil {
-		return -1, fmt.Errorf("Do failed to get files: %s", err.Error())
+		return fmt.Errorf("Do failed to get files: %s", err.Error())
 	}
+
+	wg := &sync.WaitGroup{}
+	wg.Add(len(files))
+	c := make(chan string, len(files))
+	defer close(c)
+
+	for ix, f := range files {
+		go f.ProcessContent(ix, wg, c)
+	}
+	wg.Wait()
 
 	for range files {
-		count++
-		count.Log()
+		log.Println(<-c)
 	}
 
-	return int(count), nil
+	return nil
 }
 
 func getFileList(dir string) ([]model.FileReference, error) {

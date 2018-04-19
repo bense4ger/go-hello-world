@@ -22,15 +22,12 @@ func main() {
 
 	log.Printf("Reading from : %s", pathFlg)
 
-	c, err := processor.Do(pathFlg)
+	err := processor.Do(pathFlg)
 	if err != nil {
 		log.Printf("Error doing: %s", err.Error())
 	}
 
 	log.Println("Complete")
-	if c > 0 {
-		log.Printf("%d Records Processed", c)
-	}
 }
 
 func init() {
