@@ -14,5 +14,5 @@ This part of the demo covers a couple of Go's features that will seem a bit alie
 ## Step Three - Types, Structs and Interfaces
 We're now venturing into Go's powerful type system.  This is very different to the C# and JavaScript worlds. We'll see how to create a custom type and why we'd want to do that how to define interfaces and how to "implement" them and how to create structs.  We'll also look at dates, because why not.
 
-### Step Four - Concurrency
+## Step Four - Concurrency
 One of Go's biggest strengths is how it handles concurrency.  In this section of the demo we'll have a whirlwind tour of some of Go's concurrency features
