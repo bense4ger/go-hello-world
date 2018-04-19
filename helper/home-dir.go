@@ -17,5 +17,5 @@ func GetHomeDir() string {
 		return home
 	}
 
-	return os.Getenv("home")
+	return os.Getenv("HOME")
 }
